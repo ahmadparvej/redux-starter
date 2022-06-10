@@ -1,12 +1,14 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from 'react-redux';
+import {logout} from "../store/auth/auth.action.js";
 const Navbar = () => {
-  const isAuthenticated = true;
+  const isAuth = useSelector((state)=>state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleLoginClick = () => {
-    // login screen
-    if (isAuthenticated) {
+    dispatch(logout())
+    if (isAuth) {
       navigate("/login");
       // he wants to logout
     } else {
@@ -41,7 +43,7 @@ const Navbar = () => {
         }}
       >
         <button data-cy="navbar-login-logout-button" onClick={handleLoginClick}>
-          {isAuthenticated ? "Logout" : "Login"}
+          {isAuth? "Logout" : "Login"}
         </button>
       </div>
     </div>
